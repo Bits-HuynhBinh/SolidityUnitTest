@@ -23,13 +23,13 @@ contract MetaCoin
 		balances[tx.origin] = 10000;
 
 		clock = Clock(_clockAddress);
-		finishAt = clock.getTime() + _duration;
+		finishAt = clock.getNow() + _duration;
 	}
 
 	
 	function isFinished() public view returns(bool)
 	{
-		return finishAt <= clock.getTime();
+		return finishAt <= clock.getNow();
 	}
 
 	function sendCoin(address receiver, uint amount) public returns(bool sufficient) 

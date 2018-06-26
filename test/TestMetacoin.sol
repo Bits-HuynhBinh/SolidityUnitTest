@@ -8,11 +8,14 @@ contract TestMetacoin
 {
         uint public initialBalance = 10 ether; 
 
-        // function testInitialBalanceUsingDeployedContract()public {
-        //   MetaCoin meta = MetaCoin(DeployedAddresses.MetaCoin()); 
-        //   uint expected = 10000; 
-        //   Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 MetaCoin initially"); 
-        // }
+        function testInitialBalanceUsingDeployedContract() public 
+        {
+          Clock clock = Clock(DeployedAddresses.Clock());
+          MetaCoin meta = new MetaCoin(2 days, address(clock));
+
+          uint expected = 10000; 
+          Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 MetaCoin initially"); 
+        }
 
         // function testInitialBalanceWithNewMetaCoin()public {
         //   MetaCoin meta = new MetaCoin(); 
@@ -93,11 +96,11 @@ contract TestMetacoin
         function testFinishingFundRising() public 
         {
           Clock clock = Clock(DeployedAddresses.Clock());
-          MetaCoin funding = new MetaCoin(1 days, address(clock));
+          MetaCoin funding = new MetaCoin(2 days, address(clock));
 
           Assert.equal(funding.isFinished(), false, "Is finished before time is up");
 
-          clock.setTime(now + 1 days);
+          clock.setNow(now + 2 days);
           Assert.equal(funding.isFinished(), true, "Is not finished before time is up");
         }
 }

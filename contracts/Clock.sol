@@ -4,17 +4,17 @@ contract Clock
 {
     uint private timestamp;
 
-    function getTime() public view returns(uint)
+    function getNow() public view returns(uint)
     {
         if(timestamp > 0)
         {
             return timestamp;
         }
 
-        return block.timestamp;
+        return now;
     }
 
-    function setTime(uint _time) public
+    function setNow(uint _time) public
     {
         timestamp = _time;
     }
